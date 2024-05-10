@@ -100,7 +100,7 @@ def df_to_excel(
         }
     )
     df.sort_values(by=["date_published"], inplace=True, ascending=False)
-    df.to_excel("output.xlsx")
+    df.to_excel("output.xlsx", index=False)
 
 
 def scrape(start_date, end_date, query):
