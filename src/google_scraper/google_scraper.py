@@ -143,8 +143,10 @@ def scrape(start_date, end_date, query):
             continue
 
         for block in soup.find("div", {"id": "rso", "class": "dURPMd"}).children:
-            if not block.get("class")[0] == "ULSxyf" and not block.find(
-                "span", {"id": "fld_1"}
+            if (
+                not block.get("class")[0] == "ULSxyf"
+                and not block.find("span", {"id": "fld_1"})
+                and not len(block.contents) == 0
             ):
                 url = block.find("a", {"jsname": "UWckNb"}).get("href")
                 domain = re.sub(r"https?://(www\.)?|(?<!/)/.*", "", url)
