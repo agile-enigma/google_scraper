@@ -101,6 +101,7 @@ def df_to_excel(
     )
     df.sort_values(by=["date_published"], inplace=True, ascending=False)
     df.to_excel("output.xlsx", index=False)
+    print('done!')
 
 
 def scrape(start_date, end_date, query):
@@ -120,6 +121,7 @@ def scrape(start_date, end_date, query):
     languages = []
     domains = []
 
+    print('...working...')
     results_page = 0
     done = False
     while not done:
