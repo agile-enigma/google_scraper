@@ -10,7 +10,6 @@ from selenium import webdriver
 def get_date_published(block):
     if block.find("span", class_="LEwnzc"):
         date_published = to_datetime(block.find("span", class_="LEwnzc").text)
-        print(date_published)
     elif block.find("div", class_="gqF9jc"):
         date_published = to_datetime(block.find("div", class_="gqF9jc").text)
     elif block.find("cite", class_="qLRx3b") and re.search(
@@ -24,7 +23,7 @@ def get_date_published(block):
 
 
 def to_datetime(date_published):
-    if date_published is None:
+    if date_published is not None:
         if re.search(r"months? ago", date_published):
             months_ago = int(re.search(r"\d", date_published).group())
             dt_object = datetime.datetime.now(
@@ -51,6 +50,14 @@ def to_datetime(date_published):
             )
         elif re.search(r"hours? ago", date_published):
             hours_ago = int(re.search(r"\d{,2} (?=hour)", date_published).group())
+            dt_object = datetime.datetime.now(
+                pytz.timezone("US/Eastern")
+            ) - datetime.timedelta(hours=hours_ago)
+            dt_object = datetime.datetime.strptime(
+                dt_object.strftime("%B %d, %Y"), "%B %d, %Y"
+            )
+        elif re.search(r"minutes? ago", date_published):
+            hours_ago = int(re.search(r"\d{,2} (?=minute)", date_published).group())
             dt_object = datetime.datetime.now(
                 pytz.timezone("US/Eastern")
             ) - datetime.timedelta(hours=hours_ago)
