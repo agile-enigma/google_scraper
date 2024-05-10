@@ -23,7 +23,7 @@ dependencies = [
     "requests       ~= 2.31.0",
     "langdetect     ~= 1.0.9",
     "pytz           ~= 2024.1"
-    "selenium       ~= 4.20.0
+    "selenium       ~= 4.20.0"
 ]
 
 [project.urls]
