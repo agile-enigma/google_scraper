@@ -18,13 +18,14 @@ classifiers = [
 ]
 
 dependencies = [
-    "beautifulsoup4 ~= 4.12.3 ",
-    "pandas         ~= 2.2.1",
-    "requests       ~= 2.31.0",
-    "langdetect     ~= 1.0.9",
-    "pytz           ~= 2024.1",
-    "selenium       ~= 4.20.0",
-    "openpyxl       ~= 3.1.2"
+    "beautifulsoup4           ~= 4.12.3 ",
+    "pandas                   ~= 2.2.1",
+    "requests                 ~= 2.31.0",
+    "langdetect               ~= 1.0.9",
+    "pytz                     ~= 2024.1",
+    "selenium                 ~= 4.20.0",
+    "openpyxl                 ~= 3.1.2",
+    "chromedriver-binary-auto ~= 0.3.1"
 ]
 
 [project.urls]
