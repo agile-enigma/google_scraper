@@ -58,15 +58,17 @@ def to_datetime(date_published):
                 dt_object.strftime("%B %d, %Y"), "%B %d, %Y"
             )
         elif re.search(r"minutes? ago", date_published):
-            hours_ago = int(re.search(r"\d{,2} (?=minute)", date_published).group())
+            minutes_ago = int(re.search(r"\d{,2} (?=minute)", date_published).group())
             dt_object = datetime.datetime.now(
                 pytz.timezone("US/Eastern")
-            ) - datetime.timedelta(hours=hours_ago)
+            ) - datetime.timedelta(hours=minutes_ago)
             dt_object = datetime.datetime.strptime(
                 dt_object.strftime("%B %d, %Y"), "%B %d, %Y"
             )
         else:
-            if date_published:
+            if date_published and re.search(
+                r'[a-zA-Z]{3} \d{,2},', date_published
+                ):
                 date_published = re.sub(r" — ", "", date_published)
                 dt_object = datetime.datetime.strptime(date_published, "%b %d, %Y")
             else:
