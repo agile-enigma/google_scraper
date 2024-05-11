@@ -154,7 +154,6 @@ def scrape(start_date, end_date, query):
                 domain = re.sub(r"https?://(www\.)?|(?<!/)/.*", "", url)
                 title = block.find("h3", class_="LC20lb").text
                 language = detect(title)
-
                 date_published = get_date_published(block)
                 date_scraped = datetime.datetime.strptime(
                     datetime.datetime.now(pytz.timezone("US/Eastern")).strftime(
@@ -174,5 +173,11 @@ def scrape(start_date, end_date, query):
         results_page += 10
 
     df_to_excel(
-        urls, titles, dates_published, dates_scraped, languages, titles, descriptions
+        urls,
+        domains,
+        dates_published,
+        dates_scraped,
+        languages,
+        titles,
+        descriptions
     )

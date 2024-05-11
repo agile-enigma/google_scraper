@@ -14,4 +14,5 @@ The command-line arguments taken by google_scraper are as follows:
 * **-q/--query**     : Google search string. If it contains multiple terms/operators, enclose it in single quotes
 
 Here is an example query:
+
 `python3 -m google_scraper -s 05/01/2024 -e 05/10/2024 -q '"Georgia" AND "protests" AND "foreign agents law"'`
