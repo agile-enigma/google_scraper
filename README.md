@@ -13,7 +13,7 @@ To install google_scraper directly into the site-packages directory of your virt
 `pip install git+https://github.com/agile-enigma/google_scraper.git`
 
 urlFormatter can now be used a command-line utility from anywhere in your directory structure or accessed 
-as a module from anywhere in your directory structure via `import google_scraper`.
+as a module via `import google_scraper`.
 
 ## Usage
 
