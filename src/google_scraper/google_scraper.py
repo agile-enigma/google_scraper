@@ -106,7 +106,6 @@ def df_to_excel(
 
 
 def scrape(start_date, end_date, query):
-    # from webdriver_manager.chrome import ChromeDriverManager
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(options=chrome_options)

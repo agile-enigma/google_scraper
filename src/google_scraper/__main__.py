@@ -12,7 +12,7 @@ def main():
         + "\n\t--help/-h: display this help menu"
         + "\n\t--start_date/-s: takes start date as argument. format: mm/dd/yyyy"
         + "\n\t--end_date/-e: takes end date as argument. format: mm/dd/yyyy"
-        + "\n\t--query/-q: takes Google search query as argument"
+        + "\n\t--query/-q: takes Google search query as argument. enclose in single quotes"
     )
 
     try:
