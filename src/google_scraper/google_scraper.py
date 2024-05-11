@@ -5,6 +5,7 @@ import pandas as pd
 import pytz
 import re
 from selenium import webdriver
+import chromedriver_binary
 
 
 def get_date_published(block):
