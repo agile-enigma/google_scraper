@@ -1,4 +1,4 @@
-	# google_scraper
+# google_scraper
 
 google_scraper is a command-line utiility that automates the process of scraping google search results and associated 
 metadata. Results are output into an xlsx file in the directory from which the script is run in reverse chronological order.
