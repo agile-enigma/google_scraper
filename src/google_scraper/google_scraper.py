@@ -4,6 +4,7 @@ from langdetect import detect
 import pandas as pd
 import pytz
 import re
+import time
 from selenium import webdriver
 import chromedriver_binary
 
@@ -206,6 +207,7 @@ def scrape(start_date, end_date, query):
                 descriptions += [description]
 
         results_page += 10
+        time.sleep(1)
 
     df_to_excel(
         urls,
