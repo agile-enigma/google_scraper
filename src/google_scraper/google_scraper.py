@@ -10,13 +10,19 @@ import chromedriver_binary
 
 def get_date_published(block):
     if block.find("span", class_="LEwnzc"):
-        date_published = to_datetime(block.find("span", class_="LEwnzc").text)
+        date_published = to_datetime(
+            block.find("span", class_="LEwnzc").text
+            )
     elif block.find("div", class_="gqF9jc"):
-        date_published = to_datetime(block.find("div", class_="gqF9jc").text)
+        date_published = to_datetime(
+            block.find("div", class_="gqF9jc").text
+            )
     elif block.find("cite", class_="qLRx3b") and re.search(
         r", \d{4}|ago", block.find("cite", class_="qLRx3b").text
     ):
-        date_published = to_datetime(block.find("cite", class_="qLRx3b").text)
+        date_published = to_datetime(
+            block.find("cite", class_="qLRx3b").text
+            )
     else:
         date_published = None
 
@@ -26,7 +32,9 @@ def get_date_published(block):
 def to_datetime(date_published):
     if date_published is not None:
         if re.search(r"months? ago", date_published):
-            months_ago = int(re.search(r"\d", date_published).group())
+            months_ago = int(
+                re.search(r"\d", date_published).group()
+                )
             dt_object = datetime.datetime.now(
                 pytz.timezone("US/Eastern")
             ) - datetime.timedelta(months=months_ago)
@@ -34,7 +42,9 @@ def to_datetime(date_published):
                 dt_object.strftime("%B %d, %Y"), "%B %d, %Y"
             )
         elif re.search(r"weeks? ago", date_published):
-            weeks_ago = int(re.search(r"\d{,2} (?=week)", date_published).group())
+            weeks_ago = int(
+                re.search(r"\d{,2} (?=week)", date_published).group()
+                )
             dt_object = datetime.datetime.now(
                 pytz.timezone("US/Eastern")
             ) - datetime.timedelta(weeks=weeks_ago)
@@ -42,7 +52,9 @@ def to_datetime(date_published):
                 dt_object.strftime("%B %d, %Y"), "%B %d, %Y"
             )
         elif re.search(r"days? ago", date_published):
-            days_ago = int(re.search(r"\d{,2} (?=day)", date_published).group())
+            days_ago = int(
+                re.search(r"\d{,2} (?=day)", date_published).group()
+                )
             dt_object = datetime.datetime.now(
                 pytz.timezone("US/Eastern")
             ) - datetime.timedelta(days=days_ago)
@@ -50,7 +62,9 @@ def to_datetime(date_published):
                 dt_object.strftime("%B %d, %Y"), "%B %d, %Y"
             )
         elif re.search(r"hours? ago", date_published):
-            hours_ago = int(re.search(r"\d{,2} (?=hour)", date_published).group())
+            hours_ago = int(
+                re.search(r"\d{,2} (?=hour)", date_published).group()
+                )
             dt_object = datetime.datetime.now(
                 pytz.timezone("US/Eastern")
             ) - datetime.timedelta(hours=hours_ago)
@@ -58,7 +72,9 @@ def to_datetime(date_published):
                 dt_object.strftime("%B %d, %Y"), "%B %d, %Y"
             )
         elif re.search(r"minutes? ago", date_published):
-            minutes_ago = int(re.search(r"\d{,2} (?=minute)", date_published).group())
+            minutes_ago = int(
+                re.search(r"\d{,2} (?=minute)", date_published).group()
+                )
             dt_object = datetime.datetime.now(
                 pytz.timezone("US/Eastern")
             ) - datetime.timedelta(hours=minutes_ago)
@@ -70,7 +86,10 @@ def to_datetime(date_published):
                 r'[a-zA-Z]{3} \d{,2},', date_published
                 ):
                 date_published = re.sub(r" — ", "", date_published)
-                dt_object = datetime.datetime.strptime(date_published, "%b %d, %Y")
+                dt_object = datetime.datetime.strptime(
+                    date_published,
+                    "%b %d, %Y"
+                    )
             else:
                 dt_object = None
 
@@ -79,7 +98,9 @@ def to_datetime(date_published):
 
 def get_description(block):
     if re.search(r".*— ", str(block.find("div", class_="VwiC3b"))):
-        description = re.sub(r".*— ", "", block.find("div", class_="VwiC3b").text)
+        description = re.sub(
+            r".*— ", "", block.find("div", class_="VwiC3b").text
+            )
     elif block.find("div", class_="ITZIwc"):
         description = block.find("div", class_="ITZIwc").text
     else:
@@ -89,7 +110,15 @@ def get_description(block):
 
 
 def df_to_excel(
-    urls, domains, dates_published, dates_scraped, languages, titles, descriptions
+    urls,
+    domains,
+    dates_published,
+    dates_scraped,
+    languages,
+    titles,
+    descriptions,
+    query,
+    date_scraped
 ):
     df = pd.DataFrame(
         {
@@ -102,8 +131,12 @@ def df_to_excel(
             "description": descriptions,
         }
     )
-    df.sort_values(by=["date_published"], inplace=True, ascending=False)
-    df.to_excel("output.xlsx", index=False)
+    df.sort_values(
+        by=["date_published"],
+        inplace=True,
+        ascending=False
+        )
+    df.to_excel(f"{query}_{date_scraped}.xlsx", index=False)
     print('done!')
 
 
@@ -146,7 +179,9 @@ def scrape(start_date, end_date, query):
             done = True
             continue
 
-        for block in soup.find("div", {"id": "rso", "class": "dURPMd"}).children:
+        for block in soup.find(
+            "div", {"id": "rso", "class": "dURPMd"}
+            ).children:
             if (
                 not block.get("class")[0] == "ULSxyf"
                 and not block.find("span", {"id": "fld_1"})
@@ -158,11 +193,9 @@ def scrape(start_date, end_date, query):
                 language = detect(title)
                 date_published = get_date_published(block)
                 date_scraped = datetime.datetime.strptime(
-                    datetime.datetime.now(pytz.timezone("US/Eastern")).strftime(
-                        "%B %d, %Y"
-                    ),
-                    "%B %d, %Y",
-                )
+                    datetime.datetime.now(
+                        pytz.timezone("US/Eastern")
+                        ).strftime("%B %d, %Y"), "%B %d, %Y")
                 description = get_description(block)
                 domains += [domain]
                 urls += [url]
@@ -181,5 +214,9 @@ def scrape(start_date, end_date, query):
         dates_scraped,
         languages,
         titles,
-        descriptions
+        descriptions,
+        query,
+        datetime.datetime.now(
+            pytz.timezone("US/Eastern")
+            ).strftime("%m-%d-%Y")
     )
