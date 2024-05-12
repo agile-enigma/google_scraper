@@ -25,3 +25,7 @@ The command-line arguments taken by google_scraper are as follows:
 Here is an example query:
 
 `python3 -m google_scraper -s 05/01/2024 -e 05/10/2024 -q '"Georgia" AND "protests" AND "foreign agents law"'`
+
+## Example Output
+
+<img width="832" alt="Screenshot 2024-05-12 at 1 55 58 PM" src="https://github.com/agile-enigma/google_scraper/assets/110642777/cfbedaf7-8623-4faa-98a2-24e9dc2e6c85">
