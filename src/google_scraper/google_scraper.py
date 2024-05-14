@@ -222,3 +222,4 @@ def scrape(start_date, end_date, query):
             pytz.timezone("US/Eastern")
             ).strftime("%m-%d-%Y")
     )
+    driver.quit()
