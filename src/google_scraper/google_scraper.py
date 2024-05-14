@@ -97,17 +97,17 @@ def to_datetime(date_published):
     return dt_object
 
 
-def get_description(block):
+def get_content_snippet(block):
     if re.search(r".*— ", str(block.find("div", class_="VwiC3b"))):
-        description = re.sub(
+        content_snippet = re.sub(
             r".*— ", "", block.find("div", class_="VwiC3b").text
             )
     elif block.find("div", class_="ITZIwc"):
-        description = block.find("div", class_="ITZIwc").text
+        content_snippet = block.find("div", class_="ITZIwc").text
     else:
-        description = block.find("div", class_="VwiC3b").text
+        content_snippet = block.find("div", class_="VwiC3b").text
 
-    return description
+    return content_snippet
 
 
 def df_to_excel(
@@ -117,7 +117,7 @@ def df_to_excel(
     dates_scraped,
     languages,
     titles,
-    descriptions,
+    content_snippets,
     query,
     date_scraped
 ):
@@ -129,7 +129,7 @@ def df_to_excel(
             "date_scraped": dates_scraped,
             "language": languages,
             "title": titles,
-            "description": descriptions,
+            "content_snippet": content_snippets,
         }
     )
     df.sort_values(
@@ -152,7 +152,7 @@ def scrape(start_date, end_date, query):
     urls = []
     titles = []
     dates_published = []
-    descriptions = []
+    content_snippets = []
     dates_scraped = []
     languages = []
     domains = []
@@ -197,14 +197,14 @@ def scrape(start_date, end_date, query):
                     datetime.datetime.now(
                         pytz.timezone("US/Eastern")
                         ).strftime("%B %d, %Y"), "%B %d, %Y")
-                description = get_description(block)
+                content_snippet = get_content_snippet(block)
                 domains += [domain]
                 urls += [url]
                 titles += [title]
                 dates_published += [date_published]
                 languages += [language]
                 dates_scraped += [date_scraped]
-                descriptions += [description]
+                content_snippets += [content_snippet]
 
         results_page += 10
         time.sleep(1)
@@ -216,7 +216,7 @@ def scrape(start_date, end_date, query):
         dates_scraped,
         languages,
         titles,
-        descriptions,
+        content_snippets,
         query,
         datetime.datetime.now(
             pytz.timezone("US/Eastern")
