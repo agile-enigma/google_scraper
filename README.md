@@ -28,4 +28,4 @@ Here is an example query:
 
 ## Example Output
 
-<img width="832" alt="Screenshot 2024-05-12 at 1 55 58 PM" src="https://github.com/agile-enigma/google_scraper/assets/110642777/cfbedaf7-8623-4faa-98a2-24e9dc2e6c85">
+<img width="762" alt="Screenshot 2024-05-13 at 11 05 59 PM" src="https://github.com/agile-enigma/google_scraper/assets/110642777/364a3894-1ecc-42a9-9adf-2d3f839ed941">
