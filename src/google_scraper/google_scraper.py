@@ -7,6 +7,7 @@ import re
 import time
 from selenium import webdriver
 import chromedriver_binary
+import requests
 
 
 def get_date_published(block):
@@ -109,6 +110,15 @@ def get_content_snippet(block):
 
     return content_snippet
 
+def get_wayback_url(url):
+    wayback_api = "http://archive.org/wayback/available?url="
+    response = requests.get(wayback_api + url)
+    if response.status_code == 200:
+        data = response.json()
+        if 'archived_snapshots' in data and 'closest' in data['archived_snapshots']:
+            return data['archived_snapshots']['closest']['url']
+    return None
+
 
 def df_to_excel(
     urls,
@@ -119,7 +129,8 @@ def df_to_excel(
     titles,
     content_snippets,
     query,
-    date_scraped
+    date_scraped,
+    wayback_urls
 ):
     df = pd.DataFrame(
         {
@@ -130,6 +141,7 @@ def df_to_excel(
             "language": languages,
             "title": titles,
             "content_snippet": content_snippets,
+            "wayback_url": wayback_urls,
         }
     )
     df.sort_values(
@@ -156,6 +168,7 @@ def scrape(start_date, end_date, query):
     dates_scraped = []
     languages = []
     domains = []
+    wayback_urls = []
 
     print('...working...')
     results_page = 0
@@ -200,6 +213,7 @@ def scrape(start_date, end_date, query):
                 content_snippet = get_content_snippet(block)
                 domains += [domain]
                 urls += [url]
+                wayback_url = get_wayback_url(url)
                 titles += [title]
                 dates_published += [date_published]
                 languages += [language]
@@ -212,6 +226,7 @@ def scrape(start_date, end_date, query):
     df_to_excel(
         urls,
         domains,
+        wayback_urls,
         dates_published,
         dates_scraped,
         languages,

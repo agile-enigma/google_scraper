@@ -20,8 +20,9 @@ as a module via `import google_scraper`.
 ## Usage
 ### Use Python Environment
 ```shell
-source gscraper_env/bin/activate
 python3 -m venv gscraper_env
+source gscraper_env/bin/activate
+pip install git+https://github.com/irregularchat/google_scraper.git
 ```
 The command-line arguments taken by google_scraper are as follows:
 * **-s/--start_date**: The earliest date for which search results are desired (format: mm/dd/yyyy)
