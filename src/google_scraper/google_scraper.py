@@ -5,8 +5,10 @@ import pandas as pd
 import pytz
 import re
 import time
+
 from selenium import webdriver
-import chromedriver_binary
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def get_date_published(block):
@@ -144,7 +146,9 @@ def df_to_excel(
 def scrape(start_date, end_date, query):
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options=chrome_options)
+
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
     start_date = datetime.datetime.strptime(start_date, "%m/%d/%Y")
     end_date = datetime.datetime.strptime(end_date, "%m/%d/%Y")
